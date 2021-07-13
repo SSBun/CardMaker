@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C48FE75B269C410000B4FC38 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48FE75A269C410000B4FC38 /* CardInfo.swift */; };
 		C4BE572426982918003537F7 /* CardMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BE572326982918003537F7 /* CardMakerApp.swift */; };
 		C4BE572626982918003537F7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BE572526982918003537F7 /* ContentView.swift */; };
 		C4BE57282698291B003537F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4BE57272698291B003537F7 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C48FE75A269C410000B4FC38 /* CardInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
 		C4BE572026982918003537F7 /* CardMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BE572326982918003537F7 /* CardMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardMakerApp.swift; sourceTree = "<group>"; };
 		C4BE572526982918003537F7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,6 +59,7 @@
 			children = (
 				C4BE572326982918003537F7 /* CardMakerApp.swift */,
 				C4BE5733269836EA003537F7 /* CardPage.swift */,
+				C48FE75A269C410000B4FC38 /* CardInfo.swift */,
 				C4BE572526982918003537F7 /* ContentView.swift */,
 				C4BE57272698291B003537F7 /* Assets.xcassets */,
 				C4BE572C2698291B003537F7 /* Info.plist */,
@@ -146,6 +149,7 @@
 				C4BE572626982918003537F7 /* ContentView.swift in Sources */,
 				C4BE572426982918003537F7 /* CardMakerApp.swift in Sources */,
 				C4BE5734269836EA003537F7 /* CardPage.swift in Sources */,
+				C48FE75B269C410000B4FC38 /* CardInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

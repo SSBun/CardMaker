@@ -12,21 +12,110 @@ struct ContentView: View {
     /// PDF dcoument used to preview or export
     @State var document: PDFDocument?
     
+    @State var cards: [CardInfo] = []
+    
     var body: some View {
-        VStack {
-            Button(action: {
-                generatePDF()
-            }, label: {
-                Text("Generate PDF")
-            })
-            Button(action: {
-                exportPDF()
-            }, label: {
-                Text("Export PDF")
-            })
-            NewPDFView(document: $document)
+        HStack {
+            ScrollView([.vertical], showsIndicators: false) {
+                ForEach(Array(cards.enumerated()), id: \.1.id) { item in
+                    HStack {
+                        TextField("TITLE", text: $cards[item.0].front.title)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .font(.title2)
+                            .padding(.all, 5)
+                            .background(Color.black.opacity(0.1))
+                        TextField("SUPERSCRIPT", text: $cards[item.0].front.superscript)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .font(.title2)
+                            .padding(.all, 5)
+                            .background(Color.black.opacity(0.1))
+                        TextField("SUBTITLE", text: $cards[item.0].front.subtitle)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .font(.title2)
+                            .padding(.all, 5)
+                            .background(Color.black.opacity(0.1))
+                        TextField("CONTENT", text: $cards[item.0].back.content)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .font(.title2)
+                            .padding(.all, 5)
+                            .background(Color.black.opacity(0.2))
+                        TextField("EXAMPLES", text: $cards[item.0].back.example)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .font(.title2)
+                            .padding(.all, 5)
+                            .background(Color.black.opacity(0.2))
+                    }
+                    .frame(minHeight: 44)
+                }
+                Button(action: {
+                    cards.append(.init(front: .init(title: "", superscript: "", subtitle: ""), back: .init(content: "", example: "")))
+                }, label: {
+                    Text("Add new card")
+                        .frame(width: 100, height: 44)
+                        .background(Color.blue)
+                        .cornerRadius(10)
+                })
+                .buttonStyle(PlainButtonStyle())
+                .padding()
+                Spacer()
+            }
+            .frame(minWidth: 200, maxWidth: .infinity, maxHeight: .infinity)
+            VStack {
+                Spacer()
+                Button(action: {
+                    generatePDF()
+                }, label: {
+                    Text("Generate PDF")
+                        .frame(width: 100, height: 44)
+                        .background(Color.red)
+                        .cornerRadius(10)
+                })
+                .buttonStyle(PlainButtonStyle())
+                .padding()
+                Button(action: {
+                    for card in cards {
+                        print(card)
+                    }
+                }, label: {
+                    Text("LOG")
+                        .frame(width: 100, height: 44)
+                        .background(Color.gray)
+                        .cornerRadius(10)
+                })
+                .buttonStyle(PlainButtonStyle())
+                .padding()
+                Spacer()
+            }
+            .background(Color.gray.opacity(0.5))
         }
         .frame(minWidth: 300, minHeight: 300)
+        .sheet(item: $document) { item in
+            VStack {
+                NewPDFView(document: $document)
+                HStack(spacing: 200) {
+                    Button(action: {
+                        document = nil
+                    }, label: {
+                        Text("Close")
+                            .frame(width: 100, height: 44)
+                            .background(Color.red)
+                            .cornerRadius(10)
+                    })
+                    Button(action: {
+                        exportPDF()
+                    }, label: {
+                        Text("Export PDF")
+                            .frame(width: 100, height: 44)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    })
+                }
+                .buttonStyle(PlainButtonStyle())
+                .frame(minHeight: 100)
+            }
+            .frame(minWidth: 1200, minHeight: 1000)
+        }
+        .frame(minWidth: 500, maxWidth: .infinity, minHeight: 800, maxHeight: .infinity)
     }
     
     func exportPDF() {
@@ -53,14 +142,25 @@ struct ContentView: View {
     
     func generatePDF() {
         let pdf = PDFDocument()
-        let pages = generatePage(cards: ["get", "the", "dashed", "border", "we", "simply", "need", "to", "call", "the", "strokeBorder", "modifier", "which", "lets", "us", "define"])
+        var cardGroups: [[CardInfo]] = []
+        var cardGroup = [CardInfo]()
+        for (index, card) in cards.enumerated() {
+            if index != 0, index % 16 == 0 {
+                cardGroups.append(cardGroup)
+                cardGroup.removeAll()
+            }
+            cardGroup.append(card)
+        }
+        cardGroups.append(cardGroup)
+        
+        let pages = cardGroups.map({ generatePage(cards: $0)}).flatMap({ $0 })
         for (index, page) in pages.enumerated() {
             pdf.insert(page, at: index)
         }
         document = pdf
     }
     
-    func generatePage(cards: [String]) -> [PDFPage] {
+    func generatePage(cards: [CardInfo]) -> [PDFPage] {
         let frontPage = NSHostingView(rootView: CardPage(cards: cards))
         frontPage.setFrameSize(.init(width: 1024, height: 724))
         
@@ -72,6 +172,10 @@ struct ContentView: View {
         return [frontPage, backPage]
     }
     
+}
+
+extension PDFDocument: Identifiable {
+    public var id: String { string ?? "pdf" }
 }
 
 extension NSView {
