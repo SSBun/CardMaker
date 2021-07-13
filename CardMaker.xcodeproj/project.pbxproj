@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C4660BF9269D960A004F1FB4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4660BF8269D960A004F1FB4 /* CardView.swift */; };
+		C48D08AF269D662E0003464F /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D08AE269D662E0003464F /* DataProvider.swift */; };
+		C48D08B1269D6FEF0003464F /* SubscriptionToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D08B0269D6FEF0003464F /* SubscriptionToken.swift */; };
+		C48D08B3269D710F0003464F /* YouDaoTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D08B2269D710F0003464F /* YouDaoTranslator.swift */; };
+		C48FE75B269C410000B4FC38 /* CardInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48FE75A269C410000B4FC38 /* CardInfo.swift */; };
 		C4BE572426982918003537F7 /* CardMakerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BE572326982918003537F7 /* CardMakerApp.swift */; };
 		C4BE572626982918003537F7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BE572526982918003537F7 /* ContentView.swift */; };
 		C4BE57282698291B003537F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4BE57272698291B003537F7 /* Assets.xcassets */; };
@@ -15,6 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C4660BF8269D960A004F1FB4 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		C48D08AE269D662E0003464F /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		C48D08B0269D6FEF0003464F /* SubscriptionToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionToken.swift; sourceTree = "<group>"; };
+		C48D08B2269D710F0003464F /* YouDaoTranslator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouDaoTranslator.swift; sourceTree = "<group>"; };
+		C48FE75A269C410000B4FC38 /* CardInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardInfo.swift; sourceTree = "<group>"; };
 		C4BE572026982918003537F7 /* CardMaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardMaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4BE572326982918003537F7 /* CardMakerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardMakerApp.swift; sourceTree = "<group>"; };
 		C4BE572526982918003537F7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -57,7 +67,12 @@
 			children = (
 				C4BE572326982918003537F7 /* CardMakerApp.swift */,
 				C4BE5733269836EA003537F7 /* CardPage.swift */,
+				C4660BF8269D960A004F1FB4 /* CardView.swift */,
+				C48FE75A269C410000B4FC38 /* CardInfo.swift */,
 				C4BE572526982918003537F7 /* ContentView.swift */,
+				C48D08AE269D662E0003464F /* DataProvider.swift */,
+				C48D08B2269D710F0003464F /* YouDaoTranslator.swift */,
+				C48D08B0269D6FEF0003464F /* SubscriptionToken.swift */,
 				C4BE57272698291B003537F7 /* Assets.xcassets */,
 				C4BE572C2698291B003537F7 /* Info.plist */,
 				C4BE572D2698291B003537F7 /* CardMaker.entitlements */,
@@ -143,9 +158,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C48D08B1269D6FEF0003464F /* SubscriptionToken.swift in Sources */,
 				C4BE572626982918003537F7 /* ContentView.swift in Sources */,
 				C4BE572426982918003537F7 /* CardMakerApp.swift in Sources */,
+				C48D08AF269D662E0003464F /* DataProvider.swift in Sources */,
 				C4BE5734269836EA003537F7 /* CardPage.swift in Sources */,
+				C48D08B3269D710F0003464F /* YouDaoTranslator.swift in Sources */,
+				C4660BF9269D960A004F1FB4 /* CardView.swift in Sources */,
+				C48FE75B269C410000B4FC38 /* CardInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

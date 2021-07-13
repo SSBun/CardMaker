@@ -12,19 +12,21 @@ extension String: Identifiable {
 }
 
 struct CardPage: View {
-    private var cards: [String]
+    private var cards: [CardInfo]
     private var isBackPage: Bool
     
-    init(cards: [String], isBackPage: Bool = false) {
-        var cards = Array(cards[0...15])
+    init(cards: [CardInfo], isBackPage: Bool = false) {
+        var cards = cards
         let offset = 16 - cards.count
         if offset > 0 {
-            cards.append(contentsOf: (0..<offset).map({_ in ""}))
+            cards.append(contentsOf: (0..<offset).map({_ in .placeholder}))
+        } else {
+            cards = Array(cards[...15])
         }
         self.isBackPage = isBackPage
         if isBackPage {
-            var cardGroups = [[String]]()
-            var tempArr = [String]()
+            var cardGroups = [[CardInfo]]()
+            var tempArr = [CardInfo]()
             var notClean = false
             for (index, card) in cards.enumerated() {
                 if index % 4 == 0 {
@@ -47,36 +49,19 @@ struct CardPage: View {
     var body: some View {
         VStack {
             LazyVGrid(columns: (0...3).map { _ in GridItem(.fixed(240)) }, spacing: 10, content: {
-                ForEach(0..<(cards.count)) { index in
-                    VStack(spacing: 10) {
-                        Text("\(cards[index])")
-                            .foregroundColor(.black)
-                            .font(.largeTitle)
-                        Text("good")
-                            .font(.title2)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(maxWidth: .infinity, minHeight: 160)
-                    .overlay(
-                        Rectangle()
-                            .strokeBorder(
-                                style: StrokeStyle(
-                                    lineWidth: 1,
-                                    dash: [3]
-                                )
-                            )
-                            .foregroundColor(.gray.opacity(0.4))
-                    )
+                ForEach(cards) { cardInfo in
+                    CardView(cardInfo: cardInfo, isBackPage: isBackPage)
                 }
             })
         }
         .padding(20)
+        .frame(width: 1024, height: 724, alignment: .center)
         .background(Color.white)
     }
 }
 
 struct CardPage_Previews: PreviewProvider {
     static var previews: some View {
-        CardPage(cards: ["get", "the", "dashed", "border", "we", "simply", "need", "to", "call", "the", "strokeBorder", "modifier", "which", "dashed", "border", "we"], isBackPage: true).colorScheme(.light)
+        CardPage(cards: (0...1).map { _ in .placeholder}, isBackPage: false).colorScheme(.light)
     }
 }
