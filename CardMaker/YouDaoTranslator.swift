@@ -12,7 +12,10 @@ struct YouDaoTranslator {
     static func getInfo(_ vocabulary: String, _ callback: @escaping ((RecommendSentence, TranslationResult)?) -> Void) {
         guard let trs = translate(vocabulary), let sct = getRecommendSentences(vocabulary) else { callback(nil); return }
         let token = SubscriptionToken()
-        trs.combineLatest(sct).sink { _ in
+        trs.combineLatest(sct).sink { completion in
+            if case .failure(_) = completion {
+                callback(nil)
+            }
             token.unseal()
         } receiveValue: {  result in
             callback(result)

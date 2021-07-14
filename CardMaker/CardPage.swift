@@ -48,7 +48,7 @@ struct CardPage: View {
     
     var body: some View {
         VStack {
-            LazyVGrid(columns: (0...3).map { _ in GridItem(.fixed(240)) }, spacing: 10, content: {
+            LazyVGrid(columns: (0...3).map { _ in GridItem(.fixed(245)) }, spacing: 5, content: {
                 ForEach(cards) { cardInfo in
                     CardView(cardInfo: cardInfo, isBackPage: isBackPage)
                 }

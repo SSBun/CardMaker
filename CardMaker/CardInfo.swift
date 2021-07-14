@@ -12,7 +12,7 @@ struct CardInfo {
     var front: Front
     var back: Back
     
-    static var placeholder: CardInfo { CardInfo(front: .init(title: "perfect", superscript: "", subtitle: "UK[ˈpɜːrfɪkt]US[ˈpɜːrfɪkt]"), back: .init(content: "adj.完美的；最好的；精通的vt.使完美；使熟练n.完成式n.（Perfect）（美、爱、英）珀费克特（人名）", example: "Your job is perfect.你的工作很完美", method: "per-全部+fect-做->全部做完->完美的"))}
+    static var placeholder: CardInfo { CardInfo(front: .init(title: "perfect", superscript: "", subtitle: "UK[ˈpɜːrfɪkt]US[ˈpɜːrfɪkt]"), back: .init(content: "adj.完美的；最好的；精通的vt.使完美；使熟练n.完成式n.（Perfect）（美、爱、英）珀费克特（人名）", example: "Your job is <b>perfect</b>.你的工作很完美", method: "per-全部+fect-做->全部做完->完美的"))}
 }
 
 extension CardInfo {

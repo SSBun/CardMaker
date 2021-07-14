@@ -16,100 +16,8 @@ struct ContentView: View {
     
     var body: some View {
         HStack {
-            ScrollView([.vertical], showsIndicators: false) {
-                ForEach(Array(cards.enumerated()), id: \.1.id) { item in
-                    HStack {
-                        TextField("TITLE", text: $cards[item.0].front.title)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .font(.title2)
-                            .padding(.all, 5)
-                            .background(Color.black.opacity(0.1))
-                        TextField("SUPERSCRIPT", text: $cards[item.0].front.superscript)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .font(.title2)
-                            .padding(.all, 5)
-                            .background(Color.black.opacity(0.1))
-                        TextField("SUBTITLE", text: $cards[item.0].front.subtitle)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .font(.title2)
-                            .padding(.all, 5)
-                            .background(Color.black.opacity(0.1))
-                        TextField("CONTENT", text: $cards[item.0].back.content)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .font(.title2)
-                            .padding(.all, 5)
-                            .background(Color.black.opacity(0.2))
-                        TextField("EXAMPLES", text: $cards[item.0].back.example)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .font(.title2)
-                            .padding(.all, 5)
-                            .background(Color.black.opacity(0.2))
-                        Button(action: {
-                            YouDaoTranslator.getInfo(item.1.front.title) { result in
-                                if let result = result {
-                                    var card = cards[item.0]
-                                    card.front.subtitle = "[\(result.1.ec.word.usphone)]"
-                                    if let sentenceInfo = result.0.data.values.first {
-                                        if let sentence = sentenceInfo.sentences.first {
-                                            let methods = sentenceInfo.recite?.method ?? []
-                                            card.back.example = "\(sentence.sent)\(sentence.trans)\(methods.joined(separator: "->"))"
-                                        }
-                                        card.back.content = result.1.ec.word.trs.map({ "[\($0.pos)]\($0.tran)"}).joined()
-                                    }
-                                    cards[item.0] = card
-                                }
-                            }
-                        }, label: {
-                            Text("Translation")
-                                .frame(width: 100, height: 30)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                        })
-                        .buttonStyle(PlainButtonStyle())
-                        
-                    }
-                    .frame(minHeight: 44)
-                }
-                Button(action: {
-                    cards.append(.init(front: .init(title: "", superscript: "", subtitle: ""), back: .init(content: "", example: "")))
-                }, label: {
-                    Text("Add new card")
-                        .frame(width: 100, height: 44)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                })
-                .buttonStyle(PlainButtonStyle())
-                .padding()
-                Spacer()
-            }
-            .frame(minWidth: 200, maxWidth: .infinity, maxHeight: .infinity)
-            VStack {
-                Spacer()
-                Button(action: {
-                    generatePDF()
-                }, label: {
-                    Text("Generate PDF")
-                        .frame(width: 100, height: 44)
-                        .background(Color.red)
-                        .cornerRadius(10)
-                })
-                .buttonStyle(PlainButtonStyle())
-                .padding()
-                Button(action: {
-                    for card in cards {
-                        print(card)
-                    }
-                }, label: {
-                    Text("LOG")
-                        .frame(width: 100, height: 44)
-                        .background(Color.gray)
-                        .cornerRadius(10)
-                })
-                .buttonStyle(PlainButtonStyle())
-                .padding()
-                Spacer()
-            }
-            .background(Color.gray.opacity(0.5))
+            cardListView()
+            controlBarView()
         }
         .frame(minWidth: 300, minHeight: 300)
         .sheet(item: $document) { item in
@@ -139,6 +47,109 @@ struct ContentView: View {
             .frame(minWidth: 1200, minHeight: 1000)
         }
         .frame(minWidth: 500, maxWidth: .infinity, minHeight: 800, maxHeight: .infinity)
+    }
+    
+    func cardListView() -> some View {
+        ScrollView([.vertical], showsIndicators: false) {
+            ForEach(Array(cards.enumerated()), id: \.1.id) { item in
+                HStack {
+                    TextField("TITLE", text: $cards[item.0].front.title)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.title2)
+                        .padding(.all, 5)
+                        .background(Color.black.opacity(0.1))
+                    TextField("SUBTITLE", text: $cards[item.0].front.subtitle)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.title2)
+                        .padding(.all, 5)
+                        .background(Color.black.opacity(0.1))
+                    TextField("CONTENT", text: $cards[item.0].back.content)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.title2)
+                        .padding(.all, 5)
+                        .background(Color.black.opacity(0.3))
+                    TextField("METHOD", text: $cards[item.0].back.method)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.title2)
+                        .padding(.all, 5)
+                        .background(Color.black.opacity(0.3))
+                    TextField("EXAMPLES", text: $cards[item.0].back.example)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .font(.title2)
+                        .padding(.all, 5)
+                        .background(Color.black.opacity(0.3))
+                    Button(action: {
+                        YouDaoTranslator.getInfo(item.1.front.title) { result in
+                            if let result = result {
+                                var card = cards[item.0]
+                                card.front.subtitle = "US[\(result.1.ec.word.usphone)]"
+                                if let sentenceInfo = result.0.data.values.first {
+                                    if let sentence = sentenceInfo.sentences.first {
+                                        card.back.example = "\(sentence.sent)\(sentence.trans)"
+                                    }
+                                    let methods = sentenceInfo.recite?.method ?? []
+                                    card.back.method = "\(methods.joined(separator: "->"))"
+                                    card.back.content = result.1.ec.word.trs.map({ "[\($0.pos)]\($0.tran)"}).joined(separator: "\n")
+                                }
+                                cards[item.0] = card
+                            } else {
+                                cards[item.0].front.subtitle = "Get info failure"
+                            }
+                        }
+                    }, label: {
+                        Text("Translation")
+                            .frame(width: 100, height: 30)
+                            .background(Color.blue)
+                            .cornerRadius(10)
+                    })
+                    .buttonStyle(PlainButtonStyle())
+
+                }
+                .frame(minHeight: 44)
+            }
+            Button(action: {
+                cards.append(.init(front: .init(title: "", superscript: "", subtitle: ""), back: .init(content: "", example: "", method: "")))
+            }, label: {
+                Text("Add new card")
+                    .frame(width: 100, height: 44)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            })
+            .buttonStyle(PlainButtonStyle())
+            .padding()
+            Spacer()
+        }
+        .frame(minWidth: 200, maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    func controlBarView() -> some View {
+        VStack {
+            Spacer()
+            Button(action: {
+                generatePDF()
+            }, label: {
+                Text("Generate PDF")
+                    .frame(width: 100, height: 44)
+                    .background(Color.red)
+                    .cornerRadius(10)
+            })
+            .buttonStyle(PlainButtonStyle())
+            .padding()
+            Button(action: {
+                for card in cards {
+                    print(card)
+                }
+            }, label: {
+                Text("LOG")
+                    .frame(width: 100, height: 44)
+                    .background(Color.gray)
+                    .cornerRadius(10)
+            })
+            .buttonStyle(PlainButtonStyle())
+            .padding()
+            Spacer()
+        }
+        .background(Color.gray.opacity(0.5))
     }
     
     func exportPDF() {
