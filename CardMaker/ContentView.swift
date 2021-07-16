@@ -103,7 +103,6 @@ struct ContentView: View {
                             .cornerRadius(10)
                     })
                     .buttonStyle(PlainButtonStyle())
-
                 }
                 .frame(minHeight: 44)
             }

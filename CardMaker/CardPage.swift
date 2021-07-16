@@ -54,7 +54,7 @@ struct CardPage: View {
                 }
             })
         }
-        .padding(20)
+        .padding(10)
         .frame(width: 1024, height: 724, alignment: .center)
         .background(Color.white)
     }
@@ -62,6 +62,6 @@ struct CardPage: View {
 
 struct CardPage_Previews: PreviewProvider {
     static var previews: some View {
-        CardPage(cards: (0...1).map { _ in .placeholder}, isBackPage: false).colorScheme(.light)
+        CardPage(cards: (0...1).map { _ in .placeholder}, isBackPage: true).colorScheme(.light)
     }
 }

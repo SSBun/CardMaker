@@ -44,7 +44,7 @@ struct CardView: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
                 }
-                .padding()
+                .padding(10)
             } else {
                 Text(cardInfo.front.title)
                     .foregroundColor(.black)
@@ -69,7 +69,7 @@ struct CardView: View {
                 }
             }
         }
-        .frame(minHeight: 160)
+        .frame(minWidth:245, minHeight: 160)
         .overlay(
             Rectangle()
                 .strokeBorder( 
@@ -86,7 +86,7 @@ struct CardView: View {
 struct CardView_Previews: PreviewProvider {
     static var previews: some View {
         CardView(cardInfo: .placeholder, isBackPage: true)
-            .frame(width: 240, height: 300, alignment: .center)
+            .frame(width: 245, height: 300, alignment: .center)
             .background(Color.white)
     }
 }
