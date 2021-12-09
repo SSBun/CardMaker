@@ -72,7 +72,7 @@ struct CardView: View {
         .frame(minWidth:245, minHeight: 160)
         .overlay(
             Rectangle()
-                .strokeBorder( 
+                .strokeBorder(
                     style: StrokeStyle(
                         lineWidth: 1,
                         dash: [3]

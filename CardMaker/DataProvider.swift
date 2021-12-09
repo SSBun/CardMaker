@@ -10,16 +10,29 @@ import Combine
 
 class DataProvider {
     
-    func request(_ url: URL, method: HTTPMethod = .get, body: Data?) -> URLSession.DataTaskPublisher {
+    func request(
+        _ url: URL,
+        method: HTTPMethod = .get,
+        body: Data?
+    ) -> URLSession.DataTaskPublisher {
+        
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        if method == .post, let body = body, !body.isEmpty {
+        if method == .post,
+           let body = body,
+           !body.isEmpty
+        {
             request.httpBody = body
         }
         return URLSession(configuration: .default).dataTaskPublisher(for: request)
     }
     
-    func request<Model: Decodable>(_ url: URL, method: HTTPMethod = .get, body: Data?) -> AnyPublisher<Model, HTTPError> {
+    func request<Model: Decodable>(
+        _ url: URL,
+        method: HTTPMethod = .get,
+        body: Data?
+    ) -> AnyPublisher<Model, HTTPError> {
+        
         let subject = PassthroughSubject<Model, HTTPError>()
         let token = SubscriptionToken()
         request(url, method: method, body: body).sink { completion in

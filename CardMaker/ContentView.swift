@@ -46,7 +46,12 @@ struct ContentView: View {
             }
             .frame(minWidth: 1200, minHeight: 1000)
         }
-        .frame(minWidth: 500, maxWidth: .infinity, minHeight: 800, maxHeight: .infinity)
+        .frame(
+            minWidth: 500,
+            maxWidth: .infinity,
+            minHeight: 800,
+            maxHeight: .infinity
+        )
     }
     
     func cardListView() -> some View {
